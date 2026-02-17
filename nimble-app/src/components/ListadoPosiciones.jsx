@@ -22,7 +22,7 @@ function ListadoPosiciones ({ posiciones }) {
                 onChange={(e) => handleChange(pos.id, e.target.value)}
                 style={{ width: "300px", marginRight: "0.5rem" }}
               />
-              <button>Submit</button>
+              <button onClick={()=> enviarPostulacion(pos.id, repositorios[pos.id])}>Submit</button>
             </li>
           ))}
         </ul>

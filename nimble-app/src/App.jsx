@@ -10,6 +10,39 @@ function App(){
   const [error, setError] = useState(null);
   const email = import.meta.env.VITE_EMAIL_CANDIDATO;
 
+  const aplicarPosicion = async (jobId, repoUrl) => {
+    if (!datosCandidato) return;
+
+    const body = {
+      uuid: datosCandidato.uuid,
+      jobId,
+      candidateId: datosCandidato.candidateId,
+      applicationId: datosCandidato.candidateId, //agregué este campo ya que probando hacer POST desde Postman me indicaba que era requerido
+      repoUrl
+    };
+
+    try {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/candidate/apply-to-job`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.ok) {
+        const posicion = posiciones.find(pos => pos.id === jobId);
+        const titulo = posicion ? posicion.title : jobId;
+
+        console.log(`Postulación enviada para posición: ${titulo}`);
+      } else {
+        console.error(data);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(()=> {
     const obtenerDatos = async () => {
       try{
@@ -45,7 +78,7 @@ function App(){
       )}
 
     <br />
-    <ListadoPosiciones posiciones={posiciones} />
+    <ListadoPosiciones posiciones={posiciones} enviarPostulacion={aplicarPosicion}/>
     </div>
   );
 
