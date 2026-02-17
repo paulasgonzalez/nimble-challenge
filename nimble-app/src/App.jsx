@@ -17,7 +17,7 @@ function App(){
       uuid: datosCandidato.uuid,
       jobId,
       candidateId: datosCandidato.candidateId,
-      applicationId: datosCandidato.candidateId, //agregué este campo ya que probando hacer POST desde Postman me indicaba que era requerido
+      applicationId: datosCandidato.applicationId, //agregué este campo ya que probando hacer POST desde Postman me indicaba que era requerido
       repoUrl
     };
 

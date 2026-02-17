@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ListadoPosiciones ({ posiciones }) {
+function ListadoPosiciones ({ posiciones, enviarPostulacion }) {
   const [repositorios, setRepositorios] = useState({});
 
   const handleChange = (id, value) => {
