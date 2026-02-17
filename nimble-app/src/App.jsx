@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { traerCandidatoPorEmail } from "./services/candidatoService";
 import { obtenerPosiciones } from "./services/posicionesService";
 import ListadoPosiciones from "./components/listadoPosiciones";
+import Swal from 'sweetalert2';
 
 
 function App(){
@@ -34,12 +35,27 @@ function App(){
         const posicion = posiciones.find(pos => pos.id === jobId);
         const titulo = posicion ? posicion.title : jobId;
 
-        console.log(`Postulación enviada para posición: ${titulo}`);
-      } else {
-        console.error(data);
+        Swal.fire({
+          icon: "success",
+          title: "¡Postulación enviada!",
+          text: `Te postulaste a ${titulo}`,
+          confirmButtonColor: "#1cae65"
+        });
+        } else {
+            Swal.fire({
+              icon: "error",
+              title: "No se pudo enviar la postulación",
+              text: data.message || "Intenta nuevamente",
+              confirmButtonColor: "#d33"
+            });
       }
     } catch (err) {
-      console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Error del servidor",
+          text: err.message || "Error inesperado",
+          confirmButtonColor: "#d33"
+        });
     }
   };
 
@@ -53,13 +69,17 @@ function App(){
         setPosiciones(listaPosiciones);
       } catch (err) {
         setError(err.message);
+          Swal.fire({
+          icon: "error",
+          title: "Error al cargar datos",
+          text: err.message || "Ocurrió un error inesperado",
+          confirmButtonColor: "#d33"
+        });
       }
     };
 
     obtenerDatos();
   }, []);
-
-  if(error) return <p>Error: {error}</p>;
 
     return (
     <div style={{ padding: "2rem" }}>
