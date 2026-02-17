@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { traerCandidatoPorEmail } from "./services/candidatoService";
 import { obtenerPosiciones } from "./services/posicionesService";
+import ListadoPosiciones from "./components/listadoPosiciones";
 
 
 function App(){
@@ -28,7 +29,7 @@ function App(){
   if(error) return <p>Error: {error}</p>;
 
     return (
-    <div>
+    <div style={{ padding: "2rem" }}>
       <h2>Información del Candidato</h2>
       {datosCandidato ? (
         <div>
@@ -43,17 +44,8 @@ function App(){
         <p>Obteniendo información...</p>
       )}
 
-<br />
-       <h2>Posiciones Abiertas</h2>
-      {posiciones.length > 0 ? (
-        <ul>
-          {posiciones.map((pos) => (
-            <li key={pos.id}>{pos.title}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>Cargando posiciones...</p>
-      )}
+    <br />
+    <ListadoPosiciones posiciones={posiciones} />
     </div>
   );
 
